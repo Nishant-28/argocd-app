@@ -2,7 +2,7 @@ name: Continuous Deployment to Production
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 jobs:
   build-and-deploy:
@@ -34,6 +34,7 @@ jobs:
           PAT: ${{ secrets.PAT }}
         run: |
           git clone https://github.com/Nishant-28/argocd-app.git
+          cd argocd-app
           
           sed -i 's|image: nishant0328/argocd-app:.*|image: nishant0328/argocd-app:${{ github.sha }}|' manifest.yml
           
