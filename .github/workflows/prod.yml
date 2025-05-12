@@ -28,3 +28,17 @@ jobs:
           file: Dockerfile
           push: true
           tags: nishant0328/argocd-app:${{ github.sha }}
+
+      - name: Clone staging-ops repo, update image tags, and push tags
+        env:
+          PAT: ${{ secrets.PAT }}
+        run: |
+          git clone https://github.com/Nishant-28/argocd-app.git
+          
+          sed -i 's|image: nishant0328/argocd-app:.*|image: nishant0328/argocd-app:${{ github.sha }}|' manifest.yml
+          
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Update server image tags to ${{ github.sha }}"
+          git push https://${PAT}@github.com/Nishant-28/argocd-app.git main
