@@ -33,13 +33,13 @@ jobs:
         env:
           PAT: ${{ secrets.PAT }}
         run: |
-          git clone https://github.com/Nishant-28/argocd-app.git
-          cd argocd-app
+          git clone https://github.com/Nishant-28/argocd-app-deployment.git
+          cd argocd-app-deployment
           
-          sed -i 's|image: nishant0328/argocd-app:.*|image: nishant0328/argocd-app:${{ github.sha }}|' manifest.yml
+          sed -i 's|image: nishant0328/argocd-app-deployment:.*|image: nishant0328/argocd-app-deployment:${{ github.sha }}|' manifest.yml
           
           git config user.name "GitHub Actions Bot"
           git config user.email "actions@github.com"
           git add .
           git commit -m "Update server image tags to ${{ github.sha }}"
-          git push https://${PAT}@github.com/Nishant-28/argocd-app.git main
+          git push https://${PAT}@github.com/Nishant-28/argocd-app-deployment.git main
